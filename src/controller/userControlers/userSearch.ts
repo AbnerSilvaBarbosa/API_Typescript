@@ -1,4 +1,4 @@
-import { IControler } from './../../interfaces/UserInterfaces/userInterface';
+import { IControler } from './../../interfaces/UserInterfaces/UserControllers/interfaces';
 import { Request, Response } from "express"
 import { validationResult } from 'express-validator';
 import UserServicesRead from '../../services/userServices/userServicesRead';
@@ -19,8 +19,9 @@ class UserSearchById implements IControler {
 
 
 		try {
-			const userAccount = await new UserServicesRead().findById(Number(userId))
+			const userAccount = await UserServicesRead.findById(userId)
 			return res.status(202).send({ user: userAccount })
+
 		} catch (err: unknown | any) {
 			return res.status(401).send(err.message)
 

@@ -1,49 +1,49 @@
+import { TUserLogin } from './../../types/userTypes';
+import { IUserServicesLogin } from "../../interfaces/UserInterfaces/UserServices/interfaces"
 import userModelLogin from "../../models/userModels/userModelLogin";
-import UserServicesRead from "./userServicesRead";
 import generateToken from "../../scripts/tokengeneration"
+import userModelRead from "../../models/userModels/userModelRead";
 import { compare } from "bcrypt"
-import { Comment, Like, Post } from "@prisma/client";
 
-type userLogin = {
-	email: string,
-	password: string,
-	name: string,
-	postsCreate: Post[];
-	postsLike: Like[]
-}
+class UserServicesLogin implements IUserServicesLogin {
 
-// TODO criar tipagem e intreface
-class UserServicesLogin extends UserServicesRead {
+	public async execute(email: string, userPassword: string): Promise<TUserLogin | undefined> {
 
-	public async execute(email: string, password: string) {
-
-		const verifyIfUserExists = await this.findByEmail(email)
+		const verifyIfUserExists = await userModelRead.findByEmail(email)
 
 		if (!verifyIfUserExists) {
 			throw new Error("Email or Password is incorret ")
 		}
 
-
-
-		const user: userLogin | null = await userModelLogin.getEmailAndPassword(email)
+		const user = await userModelLogin.getEmailAndPassword(email)
 
 		if (user) {
-			const validPassword = await compare(password, user.password)
 
-			if (!validPassword) {
-				throw new Error("Email or Password is incorret 2")
+			try {
+
+
+				const validPassword = await compare(userPassword, user.password)
+
+				if (!validPassword) {
+					throw new Error("Email or Password is incorret ")
+				}
+
+				const { name, email, postsCreate, postsLike, comments, userId } = user
+
+				const token = generateToken(email)
+
+				const infosUser: TUserLogin = { token: token, userId: userId, name: name, email: email, postsCreate: postsCreate, postsLike: postsLike, comments: comments }
+
+				return infosUser
+
+			} catch (error: undefined | any) {
+
+				return error.message
+
 			}
 
-			const token = generateToken(user.email)
-			return { token, name: user.name, email: user.email, postsCreate: user.postsCreate, likePosts: user.postsLike }
-
 		}
-
-
 	}
-
-
-
 }
 
 export default new UserServicesLogin()

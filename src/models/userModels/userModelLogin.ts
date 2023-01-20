@@ -1,26 +1,28 @@
+import { TUserWithPassword } from './../../types/userTypes';
+import { IUserModelLogin } from "../../interfaces/UserInterfaces/UserModels/interfaces"
 import { PrismaClient } from '@prisma/client';
 
-
-// TODO criar tipagem e intreface
-class UserModelLogin {
+class UserModelLogin implements IUserModelLogin {
 	private prisma: PrismaClient
 
 	public constructor() {
 		this.prisma = new PrismaClient()
 	}
 
-	public async getEmailAndPassword(email: string) {
+	public async getEmailAndPassword(email: string): Promise<TUserWithPassword | null> {
 		try {
 			const result = this.prisma.user.findUnique({
 				where: {
 					email,
 				},
 				select: {
+					userId: true,
+					name: true,
 					email: true,
 					password: true,
-					name: true,
 					postsCreate: true,
 					postsLike: true,
+					comments: true,
 				}
 			})
 

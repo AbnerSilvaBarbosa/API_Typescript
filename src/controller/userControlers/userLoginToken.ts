@@ -1,8 +1,9 @@
+import { IControler } from './../../interfaces/UserInterfaces/UserControllers/interfaces';
 import userServicesLogin from "../../services/userServices/userServicesLogin";
 import { Request, Response } from "express"
 
 
-class UserLoginToken {
+class UserLoginToken implements IControler {
 
 	public async execute(req: Request, res: Response) {
 

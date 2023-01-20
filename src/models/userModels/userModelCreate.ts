@@ -1,5 +1,5 @@
-import { UserAccount } from './../../types/userTypes';
-import { IUserModelCreateInterface } from '../../interfaces/UserInterfaces/userInterface';
+import { TUserAccount } from './../../types/userTypes';
+import { IUserModelCreateInterface } from '../../interfaces/UserInterfaces/UserModels/interfaces';
 import { PrismaClient } from '@prisma/client';
 import { hash } from "bcrypt"
 
@@ -12,7 +12,7 @@ class UserModelCreate implements IUserModelCreateInterface {
 
 	}
 
-	public async save(name: string, email: string, password: string): Promise<UserAccount> {
+	public async save(name: string, email: string, password: string): Promise<TUserAccount> {
 
 		const passwordHash = await hash(password, 8)
 
@@ -33,4 +33,4 @@ class UserModelCreate implements IUserModelCreateInterface {
 
 }
 
-export default UserModelCreate
+export default new UserModelCreate()

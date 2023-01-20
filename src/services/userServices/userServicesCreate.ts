@@ -1,11 +1,12 @@
+import { TUserAccount } from './../../types/userTypes';
+import { IUserServicesCreate } from "../../interfaces/UserInterfaces/UserServices/interfaces"
 import userModelCreate from "../../models/userModels/userModelCreate"
 import UserModelRead from "../../models/userModels/userModelRead";
 
 
-class UserServicesCreate {
+class UserServicesCreate implements IUserServicesCreate {
 
-	// TODO trocar nome da função para createUser
-	public async execute(name: string, email: string, password: string) {
+	public async execute(name: string, email: string, password: string): Promise<TUserAccount> {
 
 
 		const userAlreadyExiste = await UserModelRead.findByEmail(email)
@@ -14,7 +15,7 @@ class UserServicesCreate {
 			throw new Error("User already exists.")
 		}
 
-		const user = await new userModelCreate().save(name, email, password)
+		const user = await userModelCreate.save(name, email, password)
 
 		return user
 	}

@@ -1,9 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { config } from "dotenv";
 import userRouter from "./routes/userRoutes";
 
-config();
+
 
 
 class App {

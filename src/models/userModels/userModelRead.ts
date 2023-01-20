@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { IUserModelReadInterface } from './../../interfaces/UserInterfaces/userInterface';
-import { TUserAccountAll, UserAccount } from './../../types/userTypes';
-import userModelCreate from "./userModelCreate";
+import { IUserModelReadInterface } from '../../interfaces/UserInterfaces/UserModels/interfaces';
+import { TUserAccountAll, TUserAccount } from './../../types/userTypes';
+
 
 class UserModelRead implements IUserModelReadInterface {
 
@@ -11,7 +11,7 @@ class UserModelRead implements IUserModelReadInterface {
 		this.prisma = new PrismaClient()
 	}
 
-	public async findByEmail(email: string): Promise<UserAccount | null> {
+	public async findByEmail(email: string): Promise<TUserAccount | null> {
 		try {
 			const result = await this.prisma.user.findUnique({
 				where: {
@@ -25,7 +25,7 @@ class UserModelRead implements IUserModelReadInterface {
 		}
 	}
 
-	public async findById(userId: number): Promise<TUserAccountAll | null> {
+	public async findById(userId: string): Promise<TUserAccountAll | null> {
 		try {
 			const result = await this.prisma.user.findUnique({
 				where: {

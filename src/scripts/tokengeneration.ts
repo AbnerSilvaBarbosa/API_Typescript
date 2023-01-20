@@ -1,7 +1,9 @@
 import { sign } from "jsonwebtoken"
 
 
+
 export default function tokenGeneration(email: string) {
+
 	if (process.env.SECRETE_KEY) {
 
 		const token = sign({}, process.env.SECRETE_KEY, {

@@ -1,4 +1,4 @@
-import { IControler } from './../../interfaces/UserInterfaces/userInterface';
+import { IControler } from "../../interfaces/UserInterfaces/UserControllers/interfaces"
 import { validationResult } from 'express-validator';
 import { Request, Response } from "express";
 import userServicesCreate from "../../services/userServices/userServicesCreate";

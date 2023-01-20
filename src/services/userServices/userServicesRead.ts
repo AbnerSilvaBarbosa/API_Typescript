@@ -1,28 +1,30 @@
 import UserModelRead from "../../models/userModels/userModelRead";
+import { IUserServicesRead } from "../../interfaces/UserInterfaces/UserServices/interfaces"
 
-class UserServicesRead {
 
-	protected async findByEmail(email: string) {
+class UserServicesRead implements IUserServicesRead {
+
+	public async findByEmail(email: string) {
 		const user = await UserModelRead.findByEmail(email)
 
 		if (!user) {
-			throw new Error("Nenhum usuario com esse email")
+			throw new Error("Any user with this email")
 		}
 
 		return user
 
 	}
 
-	public async findById(userId: number) {
+	public async findById(userId: string) {
 		const user = await UserModelRead.findById(userId)
 
 		if (!user) {
-			throw new Error("Nenhum usuario com esse ID")
+			throw new Error("Any user with this ID")
 		}
 
 		return user
 	}
 }
 
-export default UserServicesRead
+export default new UserServicesRead()
 
