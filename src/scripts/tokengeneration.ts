@@ -6,10 +6,12 @@ export default function tokenGeneration(email: string) {
 
 	if (process.env.SECRETE_KEY) {
 
-		const token = sign({}, process.env.SECRETE_KEY, {
+		const token = sign({ data: email }, process.env.SECRETE_KEY, {
 			subject: email,
-			expiresIn: "10s"
+			// 7200s
+			expiresIn: "7200s"
 		})
+
 
 		return token
 

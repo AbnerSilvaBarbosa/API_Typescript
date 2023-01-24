@@ -1,5 +1,7 @@
 import { Comment, Like, Post } from "@prisma/client";
 
+// TODO Organizar melhor esses types para serem independentes e poderem se juntar em um
+
 export type TUserAccount = {
 	userId: string
 	name: string
@@ -15,6 +17,8 @@ export type TUserAccountAll = {
 	postsCreate: Post[];
 	postsLike: Like[]
 }
+
+export type TUserName = { name: string }
 
 export type TUserWithPassword = TUserAccountAll & { password: string }
 

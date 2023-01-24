@@ -1,6 +1,8 @@
-import express from "express";
+import express, { NextFunction, Response, Request, } from "express";
 import cors from "cors";
+import "express-async-errors"
 import userRouter from "./routes/userRoutes";
+
 
 
 
@@ -15,7 +17,6 @@ class App {
 		this.routes();
 	}
 
-	// TODO Fazer o middlewares para erros 
 	private middlewares() {
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }))
@@ -27,6 +28,14 @@ class App {
 	}
 
 	private routes() {
+
+		// this.app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+		// 	return res.json({
+		// 		status: "Error",
+		// 		message: error.message
+		// 	})
+		// })
+
 		// TODO criar rotas para fazer interação com os posts
 		this.app.use("/user", userRouter)
 	}
